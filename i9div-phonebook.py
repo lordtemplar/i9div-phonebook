@@ -21,6 +21,10 @@ def fetch_contact_data(sheet_url):
     contacts = sheet.get_all_records()  # Fetch all records from the sheet
     return contacts
 
+# Function to ensure the phone number is treated as a string with leading zeros
+def format_phone_number(phone_number):
+    return str(phone_number).zfill(10)  # Ensure phone number is always 10 digits long, padded with zeros
+
 # URL for the Google Sheets containing contact data
 sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW_HxVnpQyLsA88kqM/edit?usp=sharing"
 
@@ -42,6 +46,8 @@ else:
 # Display contacts in a frame
 if search_results:
     for contact in search_results:
+        phone_number = format_phone_number(contact['โทรศัพท์'])  # Format the phone number
+        
         st.markdown(f"""
         <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px;">
             <div style="display: flex;">
@@ -54,7 +60,7 @@ if search_results:
                         <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
                         <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
                         <strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}<br>
-                        <strong>โทรศัพท์:</strong> {str(contact['โทรศัพท์'])}<br>
+                        <strong>โทรศัพท์:</strong> {phone_number}<br>
                         <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
                     </div>
                 </div>
