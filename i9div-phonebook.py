@@ -56,27 +56,25 @@ if search_term:
             
             st.markdown(f"""
             <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px;">
-                <div style="display: flex;">
-                    <div style="flex: 1;">
-                        <img src="{contact['ภาพ']}" alt="Contact Image" width="150">
+                <div style="text-align: center;">
+                    <img src="{contact['ภาพ']}" alt="Contact Image" width="150" style="margin-bottom: 15px;">
+                </div>
+                <div style="text-align: center; padding-bottom: 15px;">
+                    <div style='font-size:20px; line-height:2'>
+                        <strong>รุ่น:</strong> {contact['รุ่น']}<br>
+                        <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
+                        <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
+                        <strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}<br>
+                        <strong>โทรศัพท์:</strong> {phone_number}<br>
+                        <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
                     </div>
-                    <div style="flex: 2; padding-left: 20px;">
-                        <div style='font-size:20px; line-height:2'>
-                            <strong>รุ่น:</strong> {contact['รุ่น']}<br>
-                            <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
-                            <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
-                            <strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}<br>
-                            <strong>โทรศัพท์:</strong> {phone_number}<br>
-                            <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
-                        </div>
-                    </div>
-                    <div style="flex: 1; display: flex; align-items: center;">
-                        <a href="tel:{phone_number}" style="text-decoration: none;">
-                            <button style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
-                                Call
-                            </button>
-                        </a>
-                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <a href="tel:{phone_number}" style="text-decoration: none;">
+                        <button style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
+                            Call
+                        </button>
+                    </a>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -84,4 +82,3 @@ if search_term:
         st.warning("No contact found.")
 else:
     st.info("กรุณากรอกข้อมูลเพื่อค้นหาการติดต่อ")
-
