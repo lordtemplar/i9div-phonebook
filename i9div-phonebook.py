@@ -35,24 +35,25 @@ search_term = st.text_input("Enter contact name to search")
 
 # Filter contacts by search term
 if search_term:
-    search_results = [contact for contact in contacts if search_term.lower() in contact['name'].lower()]
+    search_results = [contact for contact in contacts if search_term.lower() in contact['ยศ ชื่อ สกุล'].lower()]
     
     if search_results:
         # Display search results
         for contact in search_results:
             col1, col2 = st.columns([1, 2])
             with col1:
-                # Display the contact's photo (assuming photo_url column contains the Google Drive direct link)
-                st.image(contact["photo_url"], width=250)
+                # Display the contact's photo (Google Drive direct link)
+                st.image(f"https://drive.google.com/uc?export=view&id={contact['ภาพ'].split('/')[-2]}", width=250)
             with col2:
                 # Display contact details
                 st.markdown(f"""
                 <div style='font-size:20px; line-height:2'>
-                <strong>รุ่น:</strong> {contact['rank']}<br>
-                <strong>ยศ-ชื่อ:</strong> {contact['name']}<br>
-                <strong>ตำแหน่ง:</strong> {contact['position']}<br>
-                <strong>โทรศัพท์:</strong> {contact['phone']}<br>
-                <strong>วัน เดือน ปี เกิด:</strong> {contact['birthdate']}<br>
+                <strong>รุ่น:</strong> {contact['รุ่น']}<br>
+                <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
+                <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
+                <strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}<br>
+                <strong>โทรศัพท์:</strong> {contact['โทรศัพท์']}<br>
+                <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
                 </div>
                 """, unsafe_allow_html=True)
     else:
