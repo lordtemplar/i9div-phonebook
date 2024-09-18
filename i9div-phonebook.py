@@ -21,16 +21,6 @@ def fetch_contact_data(sheet_url):
     contacts = sheet.get_all_records()  # Fetch all records from the sheet
     return contacts
 
-# Convert Google Drive link to direct image link
-def convert_drive_url(drive_url):
-    try:
-        if drive_url:  # Check if the URL exists
-            file_id = drive_url.split('/')[-2]  # Extract the file ID from the Google Drive link
-            return f"https://drive.google.com/uc?export=view&id={file_id}"
-        return None
-    except IndexError:
-        return None
-
 # URL for the Google Sheets containing contact data
 sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW_HxVnpQyLsA88kqM/edit?usp=sharing"
 
@@ -45,10 +35,9 @@ if contacts:
     for contact in contacts:
         col1, col2 = st.columns([1, 2])
         with col1:
-            # Convert Google Drive link to direct image URL and display the contact's photo
-            image_url = convert_drive_url(contact["ภาพ"])
-            if image_url:
-                st.image(image_url, width=250)
+            # Display the contact's photo directly from the Google Sheets photo URL
+            if contact["ภาพ"]:  # Check if the photo URL exists
+                st.image(contact["ภาพ"], width=250)
             else:
                 st.error("Image not available or invalid link.")
                 
