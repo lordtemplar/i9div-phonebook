@@ -34,10 +34,13 @@ st.title("Contact List")
 if contacts:
     for contact in contacts:
         col1, col2 = st.columns([1, 2])
+        
         with col1:
-            # Display the contact's photo directly from the Google Sheets photo URL
+            # Display the contact's photo using HTML <img> tag
             if contact["ภาพ"]:  # Check if the photo URL exists
-                st.image(contact["ภาพ"], width=250)
+                # Using HTML to display the image
+                image_html = f'<img src="{contact["ภาพ"]}" alt="Contact Image" width="250">'
+                st.markdown(image_html, unsafe_allow_html=True)
             else:
                 st.error("Image not available or invalid link.")
                 
