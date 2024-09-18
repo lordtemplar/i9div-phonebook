@@ -21,33 +21,37 @@ def fetch_contact_data(sheet_url):
     contacts = sheet.get_all_records()  # Fetch all records from the sheet
     return contacts
 
+# Convert Google Drive link to direct image link
+def convert_drive_url(drive_url):
+    try:
+        if drive_url:  # Check if the URL exists
+            file_id = drive_url.split('/')[-2]  # Extract the file ID from the Google Drive link
+            return f"https://drive.google.com/uc?export=view&id={file_id}"
+        return None
+    except IndexError:
+        return None
+
 # URL for the Google Sheets containing contact data
 sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW_HxVnpQyLsA88kqM/edit?usp=sharing"
 
 # Fetch the contact data from Google Sheets
 contacts = fetch_contact_data(sheet_url)
 
-# Streamlit layout for contact search and result display
-st.title("Contact Search")
+# Streamlit layout for displaying all contacts
+st.title("Contact List")
 
-# Search input
-search_term = st.text_input("Enter contact name to search (leave blank to show all)")
-
-# Filter contacts by search term
-if search_term:
-    # If search term is entered, filter contacts by name
-    search_results = [contact for contact in contacts if search_term.lower() in contact['ยศ ชื่อ สกุล'].lower()]
-else:
-    # If search term is blank, show all contacts
-    search_results = contacts
-
-# Display search results
-if search_results:
-    for contact in search_results:
+# Display all contacts
+if contacts:
+    for contact in contacts:
         col1, col2 = st.columns([1, 2])
         with col1:
-            # Display the contact's photo (Google Drive direct link)
-            st.image(f"https://drive.google.com/uc?export=view&id={contact['ภาพ'].split('/')[-2]}", width=250)
+            # Convert Google Drive link to direct image URL and display the contact's photo
+            image_url = convert_drive_url(contact["ภาพ"])
+            if image_url:
+                st.image(image_url, width=250)
+            else:
+                st.error("Image not available or invalid link.")
+                
         with col2:
             # Display contact details
             st.markdown(f"""
@@ -56,7 +60,7 @@ if search_results:
             <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
             <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
             <strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}<br>
-            <strong>โทรศัพท์:</strong> {contact['โทรศัพท์']}<br>
+            <strong>โทรศัพท์:</strong> {str(contact['โทรศัพท์'])}<br>
             <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
             </div>
             """, unsafe_allow_html=True)
