@@ -24,9 +24,13 @@ def fetch_contact_data(sheet_url):
     contacts = sheet.get_all_records()  # Fetch all records from the sheet
     return contacts
 
-# Function to convert phone number to string and preserve leading zero
-def ensure_string(phone_number):
-    return str(phone_number)  # Ensure that it's always a string
+# Function to handle phone number as a string and check for missing data
+def get_phone_number(contact):
+    phone_number = contact.get('โทรศัพท์', '')  # Get 'โทรศัพท์' or empty string if missing
+    if phone_number:
+        return str(phone_number)  # Ensure it's treated as a string
+    else:
+        return "ไม่ระบุ"  # Return 'ไม่ระบุ' if phone number is missing
 
 # URL for the Google Sheets containing contact data
 sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW_HxVnpQyLsA88kqM/edit?usp=sharing"
@@ -50,8 +54,8 @@ if search_clicked:
     # Perform search based on input
     search_results = []
     for contact in contacts:
-        # Ensure the phone number is treated as a string
-        phone_number = ensure_string(contact['โทรศัพท์'])
+        # Get phone number with proper handling
+        phone_number = get_phone_number(contact)
 
         # Check if search criteria match (name, unit, rank)
         if (name_search.lower() in (contact['ยศ ชื่อ สกุล'].lower() + contact['ชื่อเล่น'].lower())) and \
