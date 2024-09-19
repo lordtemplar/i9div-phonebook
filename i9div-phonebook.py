@@ -79,7 +79,7 @@ if search_clicked:
             st.write(f"**รุ่น**: {contact['รุ่น']}")
             st.write(f"**ตำแหน่ง**: {contact['ตำแหน่ง']}")
             st.write(f"**วัน เดือน ปี เกิด**: {contact['วัน เดือน ปี เกิด']}")
-            st.write(f"**โทรศัพท์**: {phone_number}") st_copy_to_clipboard(phone_number)
+            st.write(f"**โทรศัพท์**: {phone_number}"), st_copy_to_clipboard(phone_number)
             
             # Add the Copy to Clipboard button with a label
             
