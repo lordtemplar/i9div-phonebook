@@ -26,6 +26,13 @@ def fetch_contact_data(sheet_url):
     df = pd.DataFrame(data)  # Convert data to DataFrame
     return df
 
+# Function to ensure the phone number has a leading zero
+def format_phone_number(phone_number):
+    phone_number_str = str(phone_number)
+    if len(phone_number_str) == 9:
+        return '0' + phone_number_str
+    return phone_number_str
+
 # URL for the Google Sheets containing contact data
 sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW_HxVnpQyLsA88kqM/edit?usp=sharing"
 
@@ -60,6 +67,7 @@ if search_clicked:
     # Display contacts in a frame
     if not search_results.empty:
         for _, contact in search_results.iterrows():
+            phone_number = format_phone_number(contact['โทรศัพท์'])
             st.markdown(f"""
             <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px;">
                 <div style="text-align: center;">
@@ -71,12 +79,12 @@ if search_clicked:
                         <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
                         <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
                         <strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}<br>
-                        <strong>โทรศัพท์:</strong> {contact['โทรศัพท์']}<br>
+                        <strong>โทรศัพท์:</strong> {phone_number}<br>
                         <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <a href="tel:{contact['โทรศัพท์']}" style="text-decoration: none;">
+                    <a href="tel:{phone_number}" style="text-decoration: none;">
                         <button style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
                             Call
                         </button>
