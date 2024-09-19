@@ -31,6 +31,9 @@ sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW
 # Load the contact data
 contacts_df = fetch_contact_data(sheet_url)
 
+# Print column names to debug KeyError issues
+st.write("Available columns:", contacts_df.columns)
+
 # Ensure phone number has a leading zero if required
 def format_phone_number(phone_number):
     phone_number_str = str(phone_number)
@@ -38,7 +41,7 @@ def format_phone_number(phone_number):
 
 # Function to display contact details
 def display_contact_info(contact):
-    phone_number = format_phone_number(contact['โทรศัพท์'])
+    phone_number = format_phone_number(contact.get('โทรศัพท์', 'ไม่ระบุ'))  # Use .get() with a default value
     
     # Full-width container with centered content
     with st.container():
@@ -62,12 +65,12 @@ def display_contact_info(contact):
                 <p><strong>โทรศัพท์</strong>: {}</p>
             </div>
             """.format(
-                contact['ภาพ'],
-                contact['ยศ ชื่อ สกุล'],
-                contact['ชื่อเล่น'],
-                contact['รุ่น'],
-                contact['ตำแหน่ง'],
-                contact['วัน เดือน ปี เกิด'],
+                contact.get('ภาพ', 'https://via.placeholder.com/150'),  # Use a placeholder if image is missing
+                contact.get('ยศ ชื่อ สกุล', 'ไม่ระบุ'),
+                contact.get('ชื่อเล่น', 'ไม่ระบุ'),
+                contact.get('รุ่น', 'ไม่ระบุ'),
+                contact.get('ตำแหน่ง', 'ไม่ระบุ'),
+                contact.get('วัน เดือน ปี เกิด', 'ไม่ระบุ'),
                 phone_number,
             ),
             unsafe_allow_html=True
