@@ -70,12 +70,12 @@ if search_clicked:
         for _, contact in search_results.iterrows():
             phone_number = format_phone_number(contact['โทรศัพท์'])
             st.markdown(f"""
-            <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px;">
+            <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px; font-size:14px;">
                 <div style="text-align: center;">
                     <img src="{contact['ภาพ']}" alt="Contact Image" width="150" style="margin-bottom: 15px;">
                 </div>
                 <div style="text-align: center; padding-bottom: 15px;">
-                    <div style='font-size:20px; line-height:2'>
+                    <div style='font-size:14px; line-height:1.5'>
                         <strong>รุ่น:</strong> {contact['รุ่น']}<br>
                         <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
                         <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
