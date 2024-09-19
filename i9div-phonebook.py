@@ -70,18 +70,18 @@ if search_clicked:
         for _, contact in search_results.iterrows():
             phone_number = format_phone_number(contact['โทรศัพท์'])
             
-            # Use Streamlit components instead of raw HTML
-            st.markdown(f"### รุ่น: {contact['รุ่น']}")
-            st.markdown(f"**ยศ-ชื่อ:** {contact['ยศ ชื่อ สกุล']}")
+            # Display the contact image first, centered
+            st.image(contact['ภาพ'], width=150, use_column_width=False, caption="")
+
+            # Display information in the required order
+            st.markdown(f"### ยศ-ชื่อ: {contact['ยศ ชื่อ สกุล']}")
             st.markdown(f"**ชื่อเล่น:** {contact['ชื่อเล่น']}")
+            st.markdown(f"**วัน เดือน ปี เกิด:** {contact['วัน เดือน ปี เกิด']}")
+            st.markdown(f"**รุ่น:** {contact['รุ่น']}")
             st.markdown(f"**ตำแหน่ง:** {contact['ตำแหน่ง']}")
             st.markdown(f"**โทรศัพท์:** {phone_number}")
-            st.markdown(f"**วัน เดือน ปี เกิด:** {contact['วัน เดือน ปี เกิด']}")
             
-            # Display the contact image
-            st.image(contact['ภาพ'], width=150)
-            
-            # Add the copy-to-clipboard button
+            # Add the copy-to-clipboard button for phone number
             st_copy_to_clipboard(phone_number, f"คัดลอกเบอร์โทรศัพท์: {phone_number}")
             
     else:
