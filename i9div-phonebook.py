@@ -40,7 +40,7 @@ st.title("ทำเนียบนายทหาร จปร. ค่ายส�
 # Search inputs with categories
 name_search = st.text_input("ค้นหาด้วยชื่อ (ชื่อจริงหรือชื่อเล่น)")
 position_search = st.text_input("ค้นหาด้วยตำแหน่ง")
-unit_search = st.text_input("ค้นหาด้วยหน่วย")
+unit_search = st.text_input("ค้นหาด้วยหน่วย (จะค้นในตำแหน่ง)")
 rank_search = st.text_input("ค้นหาด้วยยศ")
 
 # Perform search based on input
@@ -52,7 +52,7 @@ for contact in contacts:
     # Check if search criteria match (name, position, unit, rank)
     if (name_search.lower() in (contact['ยศ ชื่อ สกุล'].lower() + contact['ชื่อเล่น'].lower())) and \
        (position_search.lower() in contact['ตำแหน่ง'].lower()) and \
-       (unit_search.lower() in contact['หน่วย'].lower()) and \
+       (unit_search.lower() in contact['ตำแหน่ง'].lower()) and \
        (rank_search.lower() in contact['ยศ ชื่อ สกุล'].lower()):
         search_results.append(contact)
 
@@ -70,7 +70,6 @@ if search_results:
                     <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
                     <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
                     <strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}<br>
-                    <strong>หน่วย:</strong> {contact['หน่วย']}<br>
                     <strong>โทรศัพท์:</strong> {phone_number}<br>
                     <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
                 </div>
