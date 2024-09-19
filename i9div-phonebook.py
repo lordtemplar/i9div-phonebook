@@ -32,7 +32,7 @@ df = fetch_data_from_google_sheets(sheet_url)
 # Search box to search across the entire DataFrame
 search_term = st.text_input("ค้นหา (Search)")
 
-# Step 4: Filter and display search results
+# Step 4: Filter and display search results in custom layout
 if search_term:
     # Search for the term across all columns
     search_results = df[df.apply(lambda row: row.astype(str).str.contains(search_term, case=False).any(), axis=1)]
@@ -40,6 +40,16 @@ if search_term:
     # Display the results
     if not search_results.empty:
         st.write(f"พบผลลัพธ์ที่ค้นหา (Search Results) for '{search_term}':")
-        st.dataframe(search_results)  # Display matching rows
+        
+        # Loop through each row in search results and display in custom layout
+        for _, contact in search_results.iterrows():
+            st.image(contact['ภาพ'], width=150)  # Display image
+            st.write(f"**ยศ ชื่อ สกุล**: {contact['ยศ ชื่อ สกุล']}")
+            st.write(f"**ชื่อเล่น**: {contact['ชื่อเล่น']}")
+            st.write(f"**รุ่น**: {contact['รุ่น']}")
+            st.write(f"**ตำแหน่ง**: {contact['ตำแหน่ง']}")
+            st.write(f"**วัน เดือน ปี เกิด**: {contact['วัน เดือน ปี เกิด']}")
+            st.write(f"**หมายเลขโทรศัพท์**: {contact['โทรศัพท์']}")
+            st.write("---")  # Separator between entries
     else:
         st.write("ไม่พบข้อมูลที่ต้องการ (No matching data found)")
