@@ -83,6 +83,9 @@ if search_clicked:
             st.code({phone_number})
             
             # Add the Copy to Clipboard button with a label
+            if st.button('Copy'):
+                pyperclip.copy(phone_number)
+                st.success('Text copied successfully!')
             st_copy_to_clipboard(phone_number)
             st.write("---")  # Separator line for each contact
     else:
