@@ -68,7 +68,11 @@ if search_clicked:
     if not search_results.empty:
         for _, contact in search_results.iterrows():
             phone_number = format_phone_number(contact['โทรศัพท์'])
-            
+
+            # Create a session state variable to track if the number has been copied
+            if 'copied' not in st.session_state:
+                st.session_state.copied = False
+
             # Display contact information
             st.markdown(f"""
             <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px;">
@@ -86,24 +90,21 @@ if search_clicked:
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <button onclick="copyToClipboard('{phone_number}')" style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
+                    <button onclick="navigator.clipboard.writeText('{phone_number}')" style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
                         คัดลอกเบอร์โทรศัพท์
                     </button>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
-            # JavaScript for copying phone number to clipboard
-            st.markdown(f"""
-            <script>
-            function copyToClipboard(text) {{
-                navigator.clipboard.writeText(text).then(function() {{
-                    alert('คัดลอกเบอร์โทรศัพท์ {phone_number} แล้ว');
-                }}, function(err) {{
-                    console.error('ไม่สามารถคัดลอกได้: ', err);
-                }});
-            }}
-            </script>
-            """, unsafe_allow_html=True)
+            # Simulate clipboard copying with a button click
+            if st.button(f"คัดลอกเบอร์โทรศัพท์: {phone_number}", key=contact['โทรศัพท์']):
+                st.session_state.copied = True
+                st.success(f"คัดลอกเบอร์โทรศัพท์ {phone_number} เรียบร้อยแล้ว")
+
+            # Display success message if copied
+            if st.session_state.copied:
+                st.markdown(f"<p style='color:green;'>คัดลอกเบอร์โทรศัพท์ {phone_number} เรียบร้อยแล้ว</p>", unsafe_allow_html=True)
+
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
