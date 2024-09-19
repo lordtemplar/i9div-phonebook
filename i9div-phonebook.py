@@ -37,19 +37,7 @@ df = fetch_data_from_google_sheets(sheet_url)
 # Search box to search across the entire DataFrame
 search_term = st.text_input("ค้นหา (Search)")
 
-# Step 4: Centered content layout
-st.markdown("""
-    <style>
-    .centered-content {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# Step 5: Filter and display search results in custom layout
+# Step 4: Filter and display search results in custom layout
 if search_term:
     # Search for the term across all columns
     search_results = df[df.apply(lambda row: row.astype(str).str.contains(search_term, case=False).any(), axis=1)]
@@ -66,16 +54,14 @@ if search_term:
             col1, col2, col3 = st.columns([1, 2, 1])  # The second column will hold the content in the center
             
             with col2:  # Center content in the middle column
-                with st.container():
-                    st.markdown('<div class="centered-content">', unsafe_allow_html=True)
-                    st.image(contact['ภาพ'], width=150)  # Display image
-                    st.write(f"**ยศ ชื่อ สกุล**: {contact['ยศ ชื่อ สกุล']}")
-                    st.write(f"**ชื่อเล่น**: {contact['ชื่อเล่น']}")
-                    st.write(f"**รุ่น**: {contact['รุ่น']}")
-                    st.write(f"**ตำแหน่ง**: {contact['ตำแหน่ง']}")
-                    st.write(f"**วัน เดือน ปี เกิด**: {contact['วัน เดือน ปี เกิด']}")
-                    st.write(f"**หมายเลขโทรศัพท์**: {phone_number}")
-                    st.markdown('</div>', unsafe_allow_html=True)
+                # Use native Streamlit methods to center content
+                st.image(contact['ภาพ'], width=150)  # Display image
+                st.write(f"**ยศ ชื่อ สกุล**: {contact['ยศ ชื่อ สกุล']}")
+                st.write(f"**ชื่อเล่น**: {contact['ชื่อเล่น']}")
+                st.write(f"**รุ่น**: {contact['รุ่น']}")
+                st.write(f"**ตำแหน่ง**: {contact['ตำแหน่ง']}")
+                st.write(f"**วัน เดือน ปี เกิด**: {contact['วัน เดือน ปี เกิด']}")
+                st.write(f"**หมายเลขโทรศัพท์**: {phone_number}")
                 st.write("---")  # Separator between entries
     else:
         st.write("ไม่พบข้อมูลที่ต้องการ (No matching data found)")
