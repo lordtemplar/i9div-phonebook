@@ -3,8 +3,8 @@ import gspread
 import pandas as pd
 from google.oauth2.service_account import Credentials
 
-# Set up the page layout and title
-st.set_page_config(page_title="Google Sheets Search", layout="wide")
+# Set up the page layout and update browser title
+st.set_page_config(page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์")
 
 # Authenticate and connect to Google Sheets
 def authenticate_google_sheets():
