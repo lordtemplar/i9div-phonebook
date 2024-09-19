@@ -65,33 +65,25 @@ if search_clicked:
     if rank_search:
         search_results = search_results[search_results['ยศ ชื่อ สกุล'].str.contains(rank_search, case=False, na=False)]
 
-    # Display contacts in a frame
+    # Display contacts using Streamlit's native components
     if not search_results.empty:
         for _, contact in search_results.iterrows():
             phone_number = format_phone_number(contact['โทรศัพท์'])
-            st.markdown(f"""
-            <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px; font-size:14px;">
-                <div style="text-align: center;">
-                    <img src="{contact['ภาพ']}" alt="Contact Image" width="150" style="margin-bottom: 15px;">
-                </div>
-                <div style="text-align: center; padding-bottom: 15px;">
-                    <div style='font-size:14px; line-height:1.5'>
-                        <strong>รุ่น:</strong> {contact['รุ่น']}<br>
-                        <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
-                        <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
-                        <strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}<br>
-                        <strong>โทรศัพท์:</strong> {phone_number}<br>
-                        <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
-                    </div>
-                </div>
-                <div style="text-align: center;">
-                    <p>คัดลอกหมายเลขโทรศัพท์</p> <!-- Text added above the button -->
-                    <div style="display: flex; justify-content: center;">
-                        """, unsafe_allow_html=True)
             
-            # Add the Copy to Clipboard button using st_copy_to_clipboard and position it below the text
-            st_copy_to_clipboard(phone_number)
+            # Display image
+            st.image(contact['ภาพ'], width=150)
 
-            st.markdown("</div></div>", unsafe_allow_html=True)
+            # Display contact information
+            st.subheader(f"รุ่น: {contact['รุ่น']}")
+            st.write(f"**ยศ-ชื่อ**: {contact['ยศ ชื่อ สกุล']}")
+            st.write(f"**ชื่อเล่น**: {contact['ชื่อเล่น']}")
+            st.write(f"**ตำแหน่ง**: {contact['ตำแหน่ง']}")
+            st.write(f"**โทรศัพท์**: {phone_number}")
+            st.write(f"**วัน เดือน ปี เกิด**: {contact['วัน เดือน ปี เกิด']}")
+
+            # Add the Copy to Clipboard button with label
+            st.write("คัดลอกหมายเลขโทรศัพท์:")
+            st_copy_to_clipboard(phone_number)
+            st.write("---")  # Separator line
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
