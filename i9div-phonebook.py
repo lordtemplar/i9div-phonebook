@@ -82,7 +82,7 @@ if search_clicked:
             st.write(f"**โทรศัพท์**: {phone_number}")
             
             # Add the Copy to Clipboard button with a label
-            st_copy_to_clipboard(phone_number)
+            st_copy_to_clipboard(phone_number, label="คัดลอกหมายเลขโทรศัพท์")
             st.write("---")  # Separator line for each contact
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
