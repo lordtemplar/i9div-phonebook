@@ -2,6 +2,7 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
+from st_copy_to_clipboard import st_copy_to_clipboard  # Import the copy-to-clipboard component
 
 # Set page title
 st.set_page_config(page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์")
@@ -80,22 +81,9 @@ if search_clicked:
             st.write(f"**วัน เดือน ปี เกิด**: {contact['วัน เดือน ปี เกิด']}")
             st.write(f"**โทรศัพท์**: {phone_number}")
             
-            # JavaScript button to copy to clipboard without refreshing the page
-            copy_button = f"""
-            <button onclick="copyToClipboard('{phone_number}')">คัดลอกหมายเลขโทรศัพท์</button>
-            <script>
-            function copyToClipboard(text) {{
-                var tempInput = document.createElement('input');
-                tempInput.value = text;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempInput);
-                alert('คัดลอกหมายเลขโทรศัพท์แล้ว: ' + text);
-            }}
-            </script>
-            """
-            st.markdown(copy_button, unsafe_allow_html=True)
+            # Add the Copy to Clipboard button with a label
+            st.write("คัดลอกหมายเลขโทรศัพท์:")
+            st_copy_to_clipboard(phone_number)
             st.write("---")  # Separator line for each contact
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
