@@ -102,11 +102,9 @@ if search_term:
                     <p><strong>รุ่น:</strong> {contact['รุ่น']}</p>
                     <p><strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}</p>
                     <p><strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}</p>
+                    <p><strong>หมายเลขโทรศัพท์:</strong> {phone_number}</p>
                 </div>
             """, unsafe_allow_html=True)
-            
-            # Use st.code for the phone number to make it easy to copy
-            st.code(phone_number, language='plaintext')
             
             st.markdown('</div>', unsafe_allow_html=True)  # Close container div
 
