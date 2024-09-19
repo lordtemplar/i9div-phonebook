@@ -86,7 +86,7 @@ if search_clicked:
                 </div>
             """)
             
-            # Add the Copy to Clipboard button using st_copy_to_clipboard
-            st_copy_to_clipboard(phone_number, label="คัดลอกเบอร์โทรศัพท์", help="Copy to clipboard")
+            # Add the Copy to Clipboard button using st_copy_to_clipboard without the label argument
+            st_copy_to_clipboard(phone_number)
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
