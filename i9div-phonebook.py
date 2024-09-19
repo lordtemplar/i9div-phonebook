@@ -24,9 +24,15 @@ def fetch_contact_data(sheet_url):
     contacts = sheet.get_all_records()  # Fetch all records from the sheet
     return contacts
 
-# Function to ensure the phone number is treated as a string with leading zeros
+# Function to format phone number correctly
 def format_phone_number(phone_number):
-    return str(phone_number).zfill(10)  # Ensure phone number is always 10 digits long, padded with zeros
+    # Convert to string if it's not already a string
+    phone_str = str(phone_number)
+    # Ensure that if the number is less than 10 digits, it's padded with leading zeros
+    if phone_str.isdigit() and len(phone_str) <= 10:
+        return phone_str.zfill(10)
+    else:
+        return phone_str  # Return as is if it's not a number or already formatted
 
 # URL for the Google Sheets containing contact data
 sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW_HxVnpQyLsA88kqM/edit?usp=sharing"
@@ -37,7 +43,7 @@ contacts = fetch_contact_data(sheet_url)
 # Streamlit layout for displaying contacts
 st.title("ทำเนียบนายทหาร จปร. ค่ายสุรสีห์")
 
-# Search inputs with categories (ตำแหน่ง field removed)
+# Search inputs with categories
 name_search = st.text_input("ค้นหาด้วยชื่อ")
 unit_search = st.text_input("ค้นหาด้วยหน่วย")
 rank_search = st.text_input("ค้นหาด้วยยศ")
@@ -50,8 +56,8 @@ if search_clicked:
     # Perform search based on input
     search_results = []
     for contact in contacts:
-        # Convert phone number to string with leading zeros
-        phone_number = format_phone_number(contact['โทรศัพท์'])
+        # Convert phone number to string with proper handling
+        phone_number = format_phone_number(contact.get('โทรศัพท์', 'ไม่ระบุ'))  # Use 'ไม่ระบุ' if the field is missing
 
         # Check if search criteria match (name, unit, rank)
         if (name_search.lower() in (contact['ยศ ชื่อ สกุล'].lower() + contact['ชื่อเล่น'].lower())) and \
