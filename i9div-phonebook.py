@@ -31,7 +31,7 @@ sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW
 # Load the contact data
 contacts_df = fetch_contact_data(sheet_url)
 
-# Print column names to debug KeyError issues
+# Debugging: Print available columns to check for mismatch
 st.write("Available columns:", contacts_df.columns)
 
 # Ensure phone number has a leading zero if required
@@ -41,6 +41,7 @@ def format_phone_number(phone_number):
 
 # Function to display contact details
 def display_contact_info(contact):
+    # Ensure safe access to each key with default values
     phone_number = format_phone_number(contact.get('โทรศัพท์', 'ไม่ระบุ'))  # Use .get() with a default value
     
     # Full-width container with centered content
