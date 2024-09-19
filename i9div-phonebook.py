@@ -59,12 +59,13 @@ st.markdown("""
         font-family: Arial, sans-serif;
     }
     h3 {
-        font-size: 24px;
+        font-size: 16px;  /* Make it the same size as other text */
+        font-weight: bold;  /* Bold the full name */
         color: #f1f1f1;
         text-align: center;  /* Center the full name */
     }
     p {
-        font-size: 16px;
+        font-size: 16px;  /* Make other details the same size */
         color: #f1f1f1;
         text-align: left;  /* Left align for other details */
     }
