@@ -38,9 +38,9 @@ contacts = fetch_contact_data(sheet_url)
 st.title("ทำเนียบนายทหาร จปร. ค่ายสุรสีห์")
 
 # Search inputs with categories
-name_search = st.text_input("ค้นหาด้วยชื่อ (ชื่อจริงหรือชื่อเล่น)")
+name_search = st.text_input("ค้นหาด้วยชื่อ")
 position_search = st.text_input("ค้นหาด้วยตำแหน่ง")
-unit_search = st.text_input("ค้นหาด้วยหน่วย (จะค้นในตำแหน่ง)")
+unit_search = st.text_input("ค้นหาด้วยหน่วย")
 rank_search = st.text_input("ค้นหาด้วยยศ")
 
 # Perform search based on input
