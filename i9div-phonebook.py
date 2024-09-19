@@ -84,13 +84,10 @@ if search_clicked:
                         <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
                     </div>
                 </div>
-                <div style="text-align: center;">
-                    <p>คัดลอกหมายเลขโทรศัพท์</p>
-                    <div style="display: inline-block; padding: 10px;">
-                        <!-- Copy to Clipboard button -->
-                        """, unsafe_allow_html=True)
+            </div>
+            """, unsafe_allow_html=True)
             
-            # Add the Copy to Clipboard button using st_copy_to_clipboard centered with padding
+            # Add the Copy to Clipboard button using st_copy_to_clipboard
             st_copy_to_clipboard(phone_number)
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
