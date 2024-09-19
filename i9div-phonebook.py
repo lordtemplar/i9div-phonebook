@@ -68,6 +68,8 @@ if search_clicked:
     if not search_results.empty:
         for _, contact in search_results.iterrows():
             phone_number = format_phone_number(contact['โทรศัพท์'])
+            
+            # Display contact information
             st.markdown(f"""
             <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px;">
                 <div style="text-align: center;">
@@ -84,13 +86,24 @@ if search_clicked:
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <a href="tel:{phone_number}" style="text-decoration: none;">
-                        <button style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
-                            Call
-                        </button>
-                    </a>
+                    <button onclick="copyToClipboard('{phone_number}')" style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
+                        คัดลอกเบอร์โทรศัพท์
+                    </button>
                 </div>
             </div>
+            """, unsafe_allow_html=True)
+
+            # JavaScript for copying phone number to clipboard
+            st.markdown(f"""
+            <script>
+            function copyToClipboard(text) {{
+                navigator.clipboard.writeText(text).then(function() {{
+                    alert('คัดลอกเบอร์โทรศัพท์ {phone_number} แล้ว');
+                }}, function(err) {{
+                    console.error('ไม่สามารถคัดลอกได้: ', err);
+                }});
+            }}
+            </script>
             """, unsafe_allow_html=True)
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
