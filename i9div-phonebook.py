@@ -85,10 +85,13 @@ if search_clicked:
                         <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
                     </div>
                 </div>
-            </div>
-            """, unsafe_allow_html=True)
+                <div style="text-align: center;">
+                    """, unsafe_allow_html=True)
 
-            # Add the "Copy Phone Number" button using st-copy-to-clipboard
-            st_copy_to_clipboard(phone_number, f"คัดลอกเบอร์โทรศัพท์ {phone_number}")  # Add copy button below the contact details
+            # Add the "Copy Phone Number" button inside the contact frame
+            st_copy_to_clipboard(phone_number, f"คัดลอกเบอร์โทรศัพท์ {phone_number}")  
+
+            st.markdown("</div></div>", unsafe_allow_html=True)
+
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
