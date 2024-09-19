@@ -2,6 +2,7 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
+from st_copy_to_clipboard import st_copy_to_clipboard
 
 # Set page title
 st.set_page_config(page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์")
@@ -68,38 +69,20 @@ if search_clicked:
     if not search_results.empty:
         for _, contact in search_results.iterrows():
             phone_number = format_phone_number(contact['โทรศัพท์'])
-            st.markdown(f"""
-            <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px;">
-                <div style="text-align: center;">
-                    <img src="{contact['ภาพ']}" alt="Contact Image" width="150" style="margin-bottom: 15px;">
-                </div>
-                <div style="text-align: center; padding-bottom: 15px;">
-                    <div style='font-size:20px; line-height:2'>
-                        <strong>รุ่น:</strong> {contact['รุ่น']}<br>
-                        <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
-                        <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
-                        <strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}<br>
-                        <strong>โทรศัพท์:</strong> {phone_number}<br>
-                        <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
-                    </div>
-                </div>
-                <div style="text-align: center;">
-                    <button id="copy-button-{contact.name}" onclick="copyToClipboard('{phone_number}')"
-                    style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
-                        คัดลอกเบอร์โทรศัพท์
-                    </button>
-                </div>
-            </div>
-
-            <script>
-            function copyToClipboard(text) {{
-                navigator.clipboard.writeText(text).then(function() {{
-                    alert('คัดลอกเบอร์โทรศัพท์แล้ว: ' + text);
-                }}, function(err) {{
-                    console.error('ไม่สามารถคัดลอกเบอร์ได้', err);
-                }});
-            }}
-            </script>
-            """, unsafe_allow_html=True)
+            
+            # Use Streamlit components instead of raw HTML
+            st.markdown(f"### รุ่น: {contact['รุ่น']}")
+            st.markdown(f"**ยศ-ชื่อ:** {contact['ยศ ชื่อ สกุล']}")
+            st.markdown(f"**ชื่อเล่น:** {contact['ชื่อเล่น']}")
+            st.markdown(f"**ตำแหน่ง:** {contact['ตำแหน่ง']}")
+            st.markdown(f"**โทรศัพท์:** {phone_number}")
+            st.markdown(f"**วัน เดือน ปี เกิด:** {contact['วัน เดือน ปี เกิด']}")
+            
+            # Display the contact image
+            st.image(contact['ภาพ'], width=150)
+            
+            # Add the copy-to-clipboard button
+            st_copy_to_clipboard(phone_number, f"คัดลอกเบอร์โทรศัพท์: {phone_number}")
+            
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
