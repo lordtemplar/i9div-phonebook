@@ -1,3 +1,4 @@
 gspread
 google-auth
 st_copy_to_clipboard
+pandas
