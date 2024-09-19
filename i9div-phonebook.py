@@ -83,6 +83,19 @@ if search_clicked:
             
             # Add the Copy to Clipboard button with a label
             st_copy_to_clipboard(phone_number, label="คัดลอกหมายเลขโทรศัพท์")
+
+            if st.button("คัดลอกหมายเลขโทรศัพท์"):
+                js = f"""
+                <script>
+                    navigator.clipboard.writeText('{phone_number}').then(function() {{
+                        alert('คัดลอกหมายเลขโทรศัพท์: {phone_number}');
+                    }}, function(err) {{
+                        console.error('ไม่สามารถคัดลอกได้:', err);
+                    }});
+                </script>
+                """
+                st.components.v1.html(js)
+
             st.write("---")  # Separator line for each contact
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
