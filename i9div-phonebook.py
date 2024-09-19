@@ -23,6 +23,11 @@ def fetch_data_from_google_sheets(sheet_url):
     df = pd.DataFrame(data)  # Convert to a pandas DataFrame
     return df
 
+# Ensure phone number has a leading zero if required
+def format_phone_number(phone_number):
+    phone_number_str = str(phone_number)
+    return '0' + phone_number_str if len(phone_number_str) == 9 else phone_number_str
+
 # Google Sheet URL
 sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW_HxVnpQyLsA88kqM/edit?usp=sharing"
 
@@ -43,13 +48,19 @@ if search_term:
         
         # Loop through each row in search results and display in custom layout
         for _, contact in search_results.iterrows():
-            st.image(contact['ภาพ'], width=150)  # Display image
-            st.write(f"**ยศ ชื่อ สกุล**: {contact['ยศ ชื่อ สกุล']}")
-            st.write(f"**ชื่อเล่น**: {contact['ชื่อเล่น']}")
-            st.write(f"**รุ่น**: {contact['รุ่น']}")
-            st.write(f"**ตำแหน่ง**: {contact['ตำแหน่ง']}")
-            st.write(f"**วัน เดือน ปี เกิด**: {contact['วัน เดือน ปี เกิด']}")
-            st.write(f"**หมายเลขโทรศัพท์**: {contact['โทรศัพท์']}")
-            st.write("---")  # Separator between entries
+            phone_number = format_phone_number(contact['โทรศัพท์'])  # Ensure phone number has 10 digits
+            
+            # Create columns for centered layout
+            col1, col2, col3 = st.columns([1, 2, 1])  # The second column will hold the content in the center
+            
+            with col2:  # Center content in the middle column
+                st.image(contact['ภาพ'], width=150)  # Display image
+                st.write(f"**ยศ ชื่อ สกุล**: {contact['ยศ ชื่อ สกุล']}")
+                st.write(f"**ชื่อเล่น**: {contact['ชื่อเล่น']}")
+                st.write(f"**รุ่น**: {contact['รุ่น']}")
+                st.write(f"**ตำแหน่ง**: {contact['ตำแหน่ง']}")
+                st.write(f"**วัน เดือน ปี เกิด**: {contact['วัน เดือน ปี เกิด']}")
+                st.write(f"**หมายเลขโทรศัพท์**: {phone_number}")
+                st.write("---")  # Separator between entries
     else:
         st.write("ไม่พบข้อมูลที่ต้องการ (No matching data found)")
