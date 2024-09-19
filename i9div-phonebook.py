@@ -59,7 +59,7 @@ st.markdown("""
         font-family: Arial, sans-serif;
     }
     h3 {
-        font-size: 24px;
+        font-size: 20px;  /* Reduced font size for ยศ ชื่อ สกุล */
         color: #f1f1f1;
         text-align: center;  /* Center the full name */
     }
