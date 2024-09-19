@@ -84,10 +84,14 @@ if search_clicked:
                         <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
                     </div>
                 </div>
-            </div>
-            """, unsafe_allow_html=True)
+                <div style="text-align: center;">
+                    <p>คัดลอกหมายเลขโทรศัพท์</p> <!-- Text added above the button -->
+                    <div style="display: flex; justify-content: center;">
+                        """, unsafe_allow_html=True)
             
-            # Add the Copy to Clipboard button using st_copy_to_clipboard
+            # Add the Copy to Clipboard button using st_copy_to_clipboard and position it below the text
             st_copy_to_clipboard(phone_number)
+
+            st.markdown("</div></div>", unsafe_allow_html=True)
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
