@@ -70,6 +70,7 @@ if search_clicked:
         for _, contact in search_results.iterrows():
             phone_number = format_phone_number(contact['โทรศัพท์'])
             
+            # Start contact frame
             st.markdown(f"""
             <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px;">
                 <div style="text-align: center;">
@@ -86,12 +87,16 @@ if search_clicked:
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
             # Add the "Copy Phone Number" button inside the contact frame
             st_copy_to_clipboard(phone_number, f"คัดลอกเบอร์โทรศัพท์ {phone_number}")  
 
-            st.markdown("</div></div>", unsafe_allow_html=True)
+            # Close the contact frame after button
+            st.markdown("""
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
