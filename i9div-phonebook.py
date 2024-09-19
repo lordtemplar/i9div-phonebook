@@ -40,6 +40,7 @@ st.markdown("""
     .container { width: 100%; }
     .left-content { width: 100%; text-align: left; }
     img { margin-bottom: 20px; }
+    hr { border: none; border-top: 1px solid #ccc; margin: 30px 0; } /* Custom styling for horizontal rule */
     </style>
 """, unsafe_allow_html=True)
 
@@ -59,6 +60,7 @@ if search_term:
                     <p><strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}</p>
                     <p><strong>หมายเลขโทรศัพท์:</strong> {phone_number}</p>
                 </div>
+                <hr> <!-- Add a horizontal line to separate each person -->
             """, unsafe_allow_html=True)
     else:
         st.write("ไม่พบข้อมูลที่ต้องการ (No matching data found)")
