@@ -36,8 +36,8 @@ df = fetch_data(sheet_url)
 # Display the logo and title
 st.markdown("""
     <div style="text-align:center;">
-        <img src="https://firebasestorage.googleapis.com/v0/b/i9div-phonebook.appspot.com/o/logo.gif?alt=media&token=07073796-bd55-48ff-affa-eb82fdf59b7a" width="150">
-        <h2 style="color: #f1f1f1;">ทำเนียบนายทหาร จปร. ค่ายสุรสีห์</h2>
+        <img src="https://firebasestorage.googleapis.com/v0/b/i9div-phonebook.appspot.com/o/logo.gif?alt=media&token=07073796-bd55-48ff-affa-eb82fdf59b7a" width="250"> <!-- Increased logo size -->
+        <h4 style="color: #f1f1f1;">ทำเนียบนายทหาร จปร. ค่ายสุรสีห์</h4> <!-- Smaller text size -->
     </div>
 """, unsafe_allow_html=True)
 
