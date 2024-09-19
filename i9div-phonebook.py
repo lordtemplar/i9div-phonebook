@@ -68,6 +68,11 @@ if search_clicked:
     if not search_results.empty:
         for _, contact in search_results.iterrows():
             phone_number = format_phone_number(contact['โทรศัพท์'])
+            
+            # Generate unique ID for each phone number to avoid conflicts
+            phone_number_id = f"phone-{contact.name}"
+            
+            # Display the contact and the copy button
             st.markdown(f"""
             <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px;">
                 <div style="text-align: center;">
@@ -79,12 +84,12 @@ if search_clicked:
                         <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
                         <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
                         <strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}<br>
-                        <strong>โทรศัพท์:</strong> {phone_number}<br>
+                        <strong>โทรศัพท์:</strong> <span id="{phone_number_id}">{phone_number}</span><br>
                         <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <button id="copy-button-{contact.name}" onclick="copyToClipboard('{phone_number}')"
+                    <button onclick="copyPhoneNumber('{phone_number_id}')"
                     style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
                         คัดลอกเบอร์โทรศัพท์
                     </button>
@@ -92,9 +97,10 @@ if search_clicked:
             </div>
 
             <script>
-            function copyToClipboard(text) {{
-                navigator.clipboard.writeText(text).then(function() {{
-                    alert('คัดลอกเบอร์โทรศัพท์แล้ว: ' + text);
+            function copyPhoneNumber(id) {{
+                var phoneNumber = document.getElementById(id).innerText;
+                navigator.clipboard.writeText(phoneNumber).then(function() {{
+                    alert('คัดลอกเบอร์โทรศัพท์แล้ว: ' + phoneNumber);
                 }}, function(err) {{
                     console.error('ไม่สามารถคัดลอกเบอร์ได้', err);
                 }});
