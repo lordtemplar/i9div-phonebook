@@ -4,7 +4,7 @@ from google.oauth2.service_account import Credentials
 import pandas as pd
 
 # Set page title
-st.set_page_config(page_title="Google Sheets Search")
+st.set_page_config(page_title="Google Sheets Search", layout="wide")  # Set layout to wide
 
 # Step 1: Connect to Google Sheets using credentials
 def authenticate_google_sheets():
@@ -37,25 +37,20 @@ df = fetch_data_from_google_sheets(sheet_url)
 # Search box to search across the entire DataFrame
 search_term = st.text_input("ค้นหา (Search)")
 
-# Apply custom CSS to align content and improve font styles
+# Apply custom CSS to remove the box and make content full-width
 st.markdown("""
     <style>
     .container {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
         flex-direction: column;
-        text-align: center;
+        width: 100%;  /* Make it full width */
     }
     .center-content {
         width: 100%;
-        max-width: 600px;
-        margin: auto;
-        background-color: #2d2d2d;  /* Dark background for dark theme */
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        color: #f1f1f1;  /* Light text color for dark theme */
+        margin: 0;
+        background-color: transparent;  /* Remove the background box */
+        color: #f1f1f1;
         font-family: Arial, sans-serif;
     }
     h3 {
