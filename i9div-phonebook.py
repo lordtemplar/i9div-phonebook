@@ -60,6 +60,12 @@ st.markdown("""
     h3, p {
         color: #f1f1f1;  /* Ensure all text is light-colored */
     }
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;  /* Center the image */
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -82,7 +88,7 @@ if search_term:
             # Each contact info block
             st.markdown(f"""
                 <div class="center-content">
-                    <img src="{contact['ภาพ']}" width="150" style="border-radius: 50%; margin-bottom: 20px;">
+                    <img src="{contact['ภาพ']}" width="150">
                     <h3>{contact['ยศ ชื่อ สกุล']}</h3>
                     <p><strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}</p>
                     <p><strong>รุ่น:</strong> {contact['รุ่น']}</p>
