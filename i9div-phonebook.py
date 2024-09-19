@@ -37,7 +37,7 @@ df = fetch_data_from_google_sheets(sheet_url)
 # Search box to search across the entire DataFrame
 search_term = st.text_input("ค้นหา (Search)")
 
-# Apply custom CSS to center content and ensure visibility in dark themes
+# Apply custom CSS to align content and improve font styles
 st.markdown("""
     <style>
     .container {
@@ -56,10 +56,17 @@ st.markdown("""
         border-radius: 10px;
         box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
         color: #f1f1f1;  /* Light text color for dark theme */
-        text-align: center; /* Ensure all text is centered */
+        font-family: Arial, sans-serif;
     }
-    h3, p {
-        color: #f1f1f1;  /* Ensure all text is light-colored */
+    h3 {
+        font-size: 24px;
+        color: #f1f1f1;
+        text-align: center;  /* Center the full name */
+    }
+    p {
+        font-size: 16px;
+        color: #f1f1f1;
+        text-align: left;  /* Left align for other details */
     }
     img {
         display: block;
