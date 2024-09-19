@@ -24,6 +24,10 @@ def fetch_contact_data(sheet_url):
     contacts = sheet.get_all_records()  # Fetch all records from the sheet
     return contacts
 
+# Function to convert phone number to string and preserve leading zero
+def ensure_string(phone_number):
+    return str(phone_number)  # Ensure that it's always a string
+
 # URL for the Google Sheets containing contact data
 sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW_HxVnpQyLsA88kqM/edit?usp=sharing"
 
@@ -46,6 +50,9 @@ if search_clicked:
     # Perform search based on input
     search_results = []
     for contact in contacts:
+        # Ensure the phone number is treated as a string
+        phone_number = ensure_string(contact['โทรศัพท์'])
+
         # Check if search criteria match (name, unit, rank)
         if (name_search.lower() in (contact['ยศ ชื่อ สกุล'].lower() + contact['ชื่อเล่น'].lower())) and \
            (unit_search.lower() in contact['ตำแหน่ง'].lower()) and \
@@ -66,12 +73,12 @@ if search_clicked:
                         <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
                         <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
                         <strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}<br>
-                        <strong>โทรศัพท์:</strong> {contact['โทรศัพท์']}<br>
+                        <strong>โทรศัพท์:</strong> {phone_number}<br>
                         <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <a href="tel:{contact['โทรศัพท์']}" style="text-decoration: none;">
+                    <a href="tel:{phone_number}" style="text-decoration: none;">
                         <button style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
                             Call
                         </button>
