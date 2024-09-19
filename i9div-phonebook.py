@@ -2,7 +2,6 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
-from st_copy_to_clipboard import st_copy_to_clipboard  # Import the copy-to-clipboard component
 
 # Set page title
 st.set_page_config(page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์")
@@ -70,6 +69,9 @@ if search_clicked:
         for _, contact in search_results.iterrows():
             phone_number = format_phone_number(contact['โทรศัพท์'])
             
+            # Center the entire content
+            st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
+            
             # Display the photo
             st.image(contact['ภาพ'], width=150)
 
@@ -80,10 +82,27 @@ if search_clicked:
             st.write(f"**ตำแหน่ง**: {contact['ตำแหน่ง']}")
             st.write(f"**วัน เดือน ปี เกิด**: {contact['วัน เดือน ปี เกิด']}")
             st.write(f"**โทรศัพท์**: {phone_number}")
-            
-            # Add the Copy to Clipboard button with a label
-            st.write("คัดลอกหมายเลขโทรศัพท์:")
-            st_copy_to_clipboard(phone_number)
+
+            # JavaScript button to copy to clipboard without refreshing the page
+            copy_button = f"""
+            <button onclick="copyToClipboard('{phone_number}')">คัดลอกหมายเลขโทรศัพท์</button>
+            <script>
+            function copyToClipboard(text) {{
+                var tempInput = document.createElement('input');
+                tempInput.value = text;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                alert('คัดลอกหมายเลขโทรศัพท์แล้ว: ' + text);
+            }}
+            </script>
+            """
+            st.markdown(copy_button, unsafe_allow_html=True)
+
+            # Close the centered div
+            st.markdown("</div>", unsafe_allow_html=True)
+
             st.write("---")  # Separator line for each contact
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
