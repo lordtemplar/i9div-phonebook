@@ -70,8 +70,7 @@ if search_clicked:
             phone_number = format_phone_number(contact['โทรศัพท์'])
 
             # Create a session state variable to track if the number has been copied
-            if 'copied' not in st.session_state:
-                st.session_state.copied = False
+            copy_key = f"copy_{contact['โทรศัพท์']}"  # Unique key for each contact
 
             # Display contact information
             st.markdown(f"""
@@ -90,21 +89,13 @@ if search_clicked:
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <button onclick="navigator.clipboard.writeText('{phone_number}')" style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
-                        คัดลอกเบอร์โทรศัพท์
-                    </button>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            """)
 
-            # Simulate clipboard copying with a button click
-            if st.button(f"คัดลอกเบอร์โทรศัพท์: {phone_number}", key=contact['โทรศัพท์']):
-                st.session_state.copied = True
+            # Add the copy button and show a success message if copied
+            if st.button("คัดลอกเบอร์โทรศัพท์", key=copy_key):
+                st.session_state[copy_key] = phone_number
                 st.success(f"คัดลอกเบอร์โทรศัพท์ {phone_number} เรียบร้อยแล้ว")
 
-            # Display success message if copied
-            if st.session_state.copied:
-                st.markdown(f"<p style='color:green;'>คัดลอกเบอร์โทรศัพท์ {phone_number} เรียบร้อยแล้ว</p>", unsafe_allow_html=True)
-
+            st.markdown("</div></div>", unsafe_allow_html=True)
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
