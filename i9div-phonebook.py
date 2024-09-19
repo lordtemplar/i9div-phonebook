@@ -72,7 +72,7 @@ if search_clicked:
             # Create a session state variable to track if the number has been copied
             copy_key = f"copy_{contact['โทรศัพท์']}"  # Unique key for each contact
 
-            # Display contact information
+            # Display contact information with proper HTML rendering
             st.markdown(f"""
             <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px;">
                 <div style="text-align: center;">
@@ -89,7 +89,7 @@ if search_clicked:
                     </div>
                 </div>
                 <div style="text-align: center;">
-            """)
+            """, unsafe_allow_html=True)
 
             # Add the copy button and show a success message if copied
             if st.button("คัดลอกเบอร์โทรศัพท์", key=copy_key):
