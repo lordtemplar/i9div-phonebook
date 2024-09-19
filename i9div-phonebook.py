@@ -1,6 +1,7 @@
 import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
+import pandas as pd
 
 # Set page title
 st.set_page_config(page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์")
@@ -17,26 +18,19 @@ def authenticate_google_sheets():
     client = gspread.authorize(credentials)
     return client
 
-# Fetch contact data from Google Sheets
+# Fetch contact data from Google Sheets and store in a DataFrame
 def fetch_contact_data(sheet_url):
     client = authenticate_google_sheets()
     sheet = client.open_by_url(sheet_url).sheet1  # Access the first sheet
-    contacts = sheet.get_all_records()  # Fetch all records from the sheet
-    return contacts
-
-# Function to handle phone number as a string and check for missing data
-def get_phone_number(contact):
-    phone_number = contact.get('โทรศัพท์', '')  # Get 'โทรศัพท์' or empty string if missing
-    if phone_number:
-        return str(phone_number)  # Ensure it's treated as a string
-    else:
-        return "ไม่ระบุ"  # Return 'ไม่ระบุ' if phone number is missing
+    data = sheet.get_all_records()  # Fetch all records
+    df = pd.DataFrame(data)  # Convert data to DataFrame
+    return df
 
 # URL for the Google Sheets containing contact data
 sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW_HxVnpQyLsA88kqM/edit?usp=sharing"
 
-# Fetch the contact data from Google Sheets
-contacts = fetch_contact_data(sheet_url)
+# Fetch the contact data from Google Sheets and store in a DataFrame
+contacts_df = fetch_contact_data(sheet_url)
 
 # Streamlit layout for displaying contacts
 st.title("ทำเนียบนายทหาร จปร. ค่ายสุรสีห์")
@@ -52,20 +46,20 @@ search_clicked = st.button("ค้นหา")
 # Perform search and display results only if the search button is clicked
 if search_clicked:
     # Perform search based on input
-    search_results = []
-    for contact in contacts:
-        # Get phone number with proper handling
-        phone_number = get_phone_number(contact)
-
-        # Check if search criteria match (name, unit, rank)
-        if (name_search.lower() in (contact['ยศ ชื่อ สกุล'].lower() + contact['ชื่อเล่น'].lower())) and \
-           (unit_search.lower() in contact['ตำแหน่ง'].lower()) and \
-           (rank_search.lower() in contact['ยศ ชื่อ สกุล'].lower()):
-            search_results.append(contact)
+    search_results = contacts_df[
+        (contacts_df['ยศ ชื่อ สกุล'].str.contains(name_search, case=False, na=False)) |
+        (contacts_df['ชื่อเล่น'].str.contains(name_search, case=False, na=False))
+    ]
+    
+    # Filter by unit and rank if provided
+    if unit_search:
+        search_results = search_results[search_results['ตำแหน่ง'].str.contains(unit_search, case=False, na=False)]
+    if rank_search:
+        search_results = search_results[search_results['ยศ ชื่อ สกุล'].str.contains(rank_search, case=False, na=False)]
 
     # Display contacts in a frame
-    if search_results:
-        for contact in search_results:
+    if not search_results.empty:
+        for _, contact in search_results.iterrows():
             st.markdown(f"""
             <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px;">
                 <div style="text-align: center;">
@@ -77,12 +71,12 @@ if search_clicked:
                         <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
                         <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
                         <strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}<br>
-                        <strong>โทรศัพท์:</strong> {phone_number}<br>
+                        <strong>โทรศัพท์:</strong> {contact['โทรศัพท์']}<br>
                         <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <a href="tel:{phone_number}" style="text-decoration: none;">
+                    <a href="tel:{contact['โทรศัพท์']}" style="text-decoration: none;">
                         <button style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
                             Call
                         </button>
