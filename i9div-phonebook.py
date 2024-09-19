@@ -68,11 +68,6 @@ if search_clicked:
     if not search_results.empty:
         for _, contact in search_results.iterrows():
             phone_number = format_phone_number(contact['โทรศัพท์'])
-
-            # Create a session state variable to track if the number has been copied
-            copy_key = f"copy_{contact['โทรศัพท์']}"  # Unique key for each contact
-
-            # Display contact information with proper HTML rendering
             st.markdown(f"""
             <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px;">
                 <div style="text-align: center;">
@@ -89,13 +84,22 @@ if search_clicked:
                     </div>
                 </div>
                 <div style="text-align: center;">
+                    <button id="copy-button-{contact.name}" onclick="copyToClipboard('{phone_number}')"
+                    style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
+                        คัดลอกเบอร์โทรศัพท์
+                    </button>
+                </div>
+            </div>
+
+            <script>
+            function copyToClipboard(text) {{
+                navigator.clipboard.writeText(text).then(function() {{
+                    alert('คัดลอกเบอร์โทรศัพท์แล้ว: ' + text);
+                }}, function(err) {{
+                    console.error('ไม่สามารถคัดลอกเบอร์ได้', err);
+                }});
+            }}
+            </script>
             """, unsafe_allow_html=True)
-
-            # Add the copy button and show a success message if copied
-            if st.button("คัดลอกเบอร์โทรศัพท์", key=copy_key):
-                st.session_state[copy_key] = phone_number
-                st.success(f"คัดลอกเบอร์โทรศัพท์ {phone_number} เรียบร้อยแล้ว")
-
-            st.markdown("</div></div>", unsafe_allow_html=True)
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
