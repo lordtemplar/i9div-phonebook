@@ -40,21 +40,22 @@ def format_phone_number(phone_number):
 def display_contact_info(contact):
     phone_number = format_phone_number(contact['โทรศัพท์'])
     
-    # Center content
+    # Full-width container and centered content
     with st.container():
-        col1, col2, col3 = st.columns([1, 2, 1])  # Center alignment
-        with col2:
+        st.markdown("<style>div.row-widget.stButton {text-align: center;}</style>", unsafe_allow_html=True)
+        col1, col2, col3 = st.columns([1, 3, 1])  # Columns setup for centering content
+        with col2:  # Center content in the middle column
             st.image(contact['ภาพ'], width=150)  # Display contact image
             
-            # Display contact details
+            # Display contact details in the specified order
             st.write(f"**ยศ-ชื่อ**: {contact['ยศ ชื่อ สกุล']}")
             st.write(f"**ชื่อเล่น**: {contact['ชื่อเล่น']}")
             st.write(f"**รุ่น**: {contact['รุ่น']}")
             st.write(f"**ตำแหน่ง**: {contact['ตำแหน่ง']}")
             st.write(f"**วัน เดือน ปี เกิด**: {contact['วัน เดือน ปี เกิด']}")
-            st.write(f"**โทรศัพท์**: {phone_number}")
             
-            # Add Copy to Clipboard button
+            # Phone number and Copy button
+            st.write(f"**โทรศัพท์**: {phone_number}")
             st_copy_to_clipboard(phone_number)
 
 # Streamlit layout for displaying contacts
@@ -86,4 +87,3 @@ if st.button("ค้นหา"):
             st.write("---")  # Separator between results
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
-
