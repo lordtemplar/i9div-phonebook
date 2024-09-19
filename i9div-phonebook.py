@@ -24,16 +24,6 @@ def fetch_contact_data(sheet_url):
     contacts = sheet.get_all_records()  # Fetch all records from the sheet
     return contacts
 
-# Function to format phone number correctly
-def format_phone_number(phone_number):
-    # Convert to string if it's not already a string
-    phone_str = str(phone_number)
-    # Ensure that if the number is less than 10 digits, it's padded with leading zeros
-    if phone_str.isdigit() and len(phone_str) <= 10:
-        return phone_str.zfill(10)
-    else:
-        return phone_str  # Return as is if it's not a number or already formatted
-
 # URL for the Google Sheets containing contact data
 sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW_HxVnpQyLsA88kqM/edit?usp=sharing"
 
@@ -56,9 +46,6 @@ if search_clicked:
     # Perform search based on input
     search_results = []
     for contact in contacts:
-        # Convert phone number to string with proper handling
-        phone_number = format_phone_number(contact.get('โทรศัพท์', 'ไม่ระบุ'))  # Use 'ไม่ระบุ' if the field is missing
-
         # Check if search criteria match (name, unit, rank)
         if (name_search.lower() in (contact['ยศ ชื่อ สกุล'].lower() + contact['ชื่อเล่น'].lower())) and \
            (unit_search.lower() in contact['ตำแหน่ง'].lower()) and \
@@ -79,12 +66,12 @@ if search_clicked:
                         <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
                         <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
                         <strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}<br>
-                        <strong>โทรศัพท์:</strong> {phone_number}<br>
+                        <strong>โทรศัพท์:</strong> {contact['โทรศัพท์']}<br>
                         <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <a href="tel:{phone_number}" style="text-decoration: none;">
+                    <a href="tel:{contact['โทรศัพท์']}" style="text-decoration: none;">
                         <button style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
                             Call
                         </button>
