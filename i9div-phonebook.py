@@ -37,6 +37,28 @@ df = fetch_data_from_google_sheets(sheet_url)
 # Search box to search across the entire DataFrame
 search_term = st.text_input("ค้นหา (Search)")
 
+# Apply custom CSS to center content within each column
+st.markdown("""
+    <style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+    .center-content {
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # Step 4: Filter and display search results in custom layout
 if search_term:
     # Search for the term across all columns
@@ -50,18 +72,23 @@ if search_term:
         for _, contact in search_results.iterrows():
             phone_number = format_phone_number(contact['โทรศัพท์'])  # Ensure phone number has 10 digits
             
-            # Create columns for centered layout
-            col1, col2, col3 = st.columns([1, 2, 1])  # The second column will hold the content in the center
+            # Create container div to center content both horizontally and vertically
+            st.markdown('<div class="container">', unsafe_allow_html=True)
             
-            with col2:  # Center content in the middle column
-                # Use native Streamlit methods to center content
-                st.image(contact['ภาพ'], width=150)  # Display image
-                st.write(f"**ยศ ชื่อ สกุล**: {contact['ยศ ชื่อ สกุล']}")
-                st.write(f"**ชื่อเล่น**: {contact['ชื่อเล่น']}")
-                st.write(f"**รุ่น**: {contact['รุ่น']}")
-                st.write(f"**ตำแหน่ง**: {contact['ตำแหน่ง']}")
-                st.write(f"**วัน เดือน ปี เกิด**: {contact['วัน เดือน ปี เกิด']}")
-                st.write(f"**หมายเลขโทรศัพท์**: {phone_number}")
-                st.write("---")  # Separator between entries
+            # Each contact info block
+            st.markdown(f"""
+                <div class="center-content">
+                    <img src="{contact['ภาพ']}" width="150" style="border-radius: 50%; margin-bottom: 20px;">
+                    <h3>{contact['ยศ ชื่อ สกุล']}</h3>
+                    <p><strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}</p>
+                    <p><strong>รุ่น:</strong> {contact['รุ่น']}</p>
+                    <p><strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}</p>
+                    <p><strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}</p>
+                    <p><strong>หมายเลขโทรศัพท์:</strong> {phone_number}</p>
+                </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown('</div>', unsafe_allow_html=True)  # Close container div
+
     else:
         st.write("ไม่พบข้อมูลที่ต้องการ (No matching data found)")
