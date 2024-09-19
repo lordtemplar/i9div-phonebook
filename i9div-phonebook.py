@@ -2,6 +2,7 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
+from st_copy_to_clipboard import st_copy_to_clipboard  # Import the copy to clipboard component
 
 # Set page title
 st.set_page_config(page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์")
@@ -69,10 +70,6 @@ if search_clicked:
         for _, contact in search_results.iterrows():
             phone_number = format_phone_number(contact['โทรศัพท์'])
             
-            # Generate unique ID for each phone number to avoid conflicts
-            phone_number_id = f"phone-{contact.name}"
-            
-            # Display the contact and the copy button
             st.markdown(f"""
             <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px;">
                 <div style="text-align: center;">
@@ -84,28 +81,14 @@ if search_clicked:
                         <strong>ยศ-ชื่อ:</strong> {contact['ยศ ชื่อ สกุล']}<br>
                         <strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}<br>
                         <strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}<br>
-                        <strong>โทรศัพท์:</strong> <span id="{phone_number_id}">{phone_number}</span><br>
+                        <strong>โทรศัพท์:</strong> {phone_number}<br>
                         <strong>วัน เดือน ปี เกิด:</strong> {contact['วัน เดือน ปี เกิด']}<br>
                     </div>
                 </div>
-                <div style="text-align: center;">
-                    <button onclick="copyPhoneNumber('{phone_number_id}')"
-                    style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
-                        คัดลอกเบอร์โทรศัพท์
-                    </button>
-                </div>
             </div>
-
-            <script>
-            function copyPhoneNumber(id) {{
-                var phoneNumber = document.getElementById(id).innerText;
-                navigator.clipboard.writeText(phoneNumber).then(function() {{
-                    alert('คัดลอกเบอร์โทรศัพท์แล้ว: ' + phoneNumber);
-                }}, function(err) {{
-                    console.error('ไม่สามารถคัดลอกเบอร์ได้', err);
-                }});
-            }}
-            </script>
             """, unsafe_allow_html=True)
+
+            # Add the "Copy Phone Number" button using st-copy-to-clipboard
+            st_copy_to_clipboard(phone_number, f"คัดลอกเบอร์โทรศัพท์ {phone_number}")  # Add copy button below the contact details
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
