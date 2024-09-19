@@ -32,6 +32,16 @@ sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW
 
 # Fetch and display data
 df = fetch_data(sheet_url)
+
+# Display the logo and title
+st.markdown("""
+    <div style="text-align:center;">
+        <img src="https://firebasestorage.googleapis.com/v0/b/i9div-phonebook.appspot.com/o/logo.gif?alt=media&token=07073796-bd55-48ff-affa-eb82fdf59b7a" width="150">
+        <h2 style="color: #f1f1f1;">ทำเนียบนายทหาร จปร. ค่ายสุรสีห์</h2>
+    </div>
+""", unsafe_allow_html=True)
+
+# Search box to search across the entire DataFrame
 search_term = st.text_input("ค้นหา (Search)")
 
 # Apply custom CSS for left-aligned content
@@ -40,7 +50,7 @@ st.markdown("""
     .container { width: 100%; }
     .left-content { width: 100%; text-align: left; }
     img { margin-bottom: 20px; }
-    hr { border: none; border-top: 1px solid #ccc; margin: 30px 0; } /* Custom styling for horizontal rule */
+    hr { border: none; border-top: 1px solid #ccc; margin: 30px 0; }
     </style>
 """, unsafe_allow_html=True)
 
