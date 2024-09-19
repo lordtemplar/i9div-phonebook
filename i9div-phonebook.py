@@ -2,7 +2,6 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
-from st_copy_to_clipboard import st_copy_to_clipboard
 
 # Set page title
 st.set_page_config(page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์")
@@ -85,9 +84,22 @@ if search_clicked:
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    """)
-            # Using st-copy-to-clipboard for the copy functionality
-            st_copy_to_clipboard(phone_number, f"คัดลอกเบอร์โทรศัพท์: {phone_number}")
-            st.markdown("</div></div>", unsafe_allow_html=True)
+                    <button id="copy-button-{contact.name}" onclick="copyToClipboard('{phone_number}')"
+                    style="background-color: #4CAF50; color: white; padding: 10px 24px; border: none; cursor: pointer;">
+                        คัดลอกเบอร์โทรศัพท์
+                    </button>
+                </div>
+            </div>
+
+            <script>
+            function copyToClipboard(text) {{
+                navigator.clipboard.writeText(text).then(function() {{
+                    alert('คัดลอกเบอร์โทรศัพท์แล้ว: ' + text);
+                }}, function(err) {{
+                    console.error('ไม่สามารถคัดลอกเบอร์ได้', err);
+                }});
+            }}
+            </script>
+            """, unsafe_allow_html=True)
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
