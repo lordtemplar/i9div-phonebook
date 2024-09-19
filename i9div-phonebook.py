@@ -42,12 +42,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Search box to search across the entire DataFrame
-search_term = st.text_input("ค้นหา (Search)")
+search_term = st.text_input("ค้นหา (ยศ, ชื่อ, นามสกุล, รุ่น, ตำแหน่ง, สังกัด, ชั้นยศ, หมายเลขโทรศัพท์)")
 
 # Apply custom CSS for left-aligned content
 st.markdown("""
     <style>
     .container { width: 100%; }
+    .centered-text { text-align: center; } /* Center text */
     .left-content { width: 100%; text-align: left; }
     img { margin-bottom: 20px; }
     hr { border: none; border-top: 1px solid #ccc; margin: 30px 0; }
@@ -62,8 +63,8 @@ if search_term:
             phone_number = format_phone_number(contact['โทรศัพท์'])
             st.markdown(f"""
                 <div class="left-content">
-                    <img src="{contact['ภาพ']}" width="150">
-                    <h3>{contact['ยศ ชื่อ สกุล']}</h3>
+                    <img src="{contact['ภาพ']}" width="250"> <!-- Increased image size to 250px -->
+                    <h3 class="centered-text">{contact['ยศ ชื่อ สกุล']}</h3> <!-- Centered name -->
                     <p><strong>ชื่อเล่น:</strong> {contact['ชื่อเล่น']}</p>
                     <p><strong>รุ่น:</strong> {contact['รุ่น']}</p>
                     <p><strong>ตำแหน่ง:</strong> {contact['ตำแหน่ง']}</p>
