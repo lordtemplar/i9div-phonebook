@@ -2,7 +2,7 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
-from st_copy_to_clipboard import st_copy_to_clipboard  # Import the copy-to-clipboard component
+import pyperclip  # Import pyperclip to handle clipboard operations
 
 # Set page title
 st.set_page_config(page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์")
@@ -44,8 +44,8 @@ contacts_df = fetch_contact_data(sheet_url)
 st.title("ทำเนียบนายทหาร จปร. ค่ายสุรสีห์")
 
 # Search inputs with categories
-name_search = st.text_input("ค้นหาด้วยชื่อ/ชื่อเล่น")
-unit_search = st.text_input("ค้นหาด้วยตำแหน่ง/หน่วย")
+name_search = st.text_input("ค้นหาด้วยชื่อ")
+unit_search = st.text_input("ค้นหาด้วยหน่วย")
 rank_search = st.text_input("ค้นหาด้วยยศ")
 
 # Add a search button
@@ -81,9 +81,10 @@ if search_clicked:
             st.write(f"**วัน เดือน ปี เกิด**: {contact['วัน เดือน ปี เกิด']}")
             st.write(f"**โทรศัพท์**: {phone_number}")
             
-            # Add the Copy to Clipboard button with a label
-            st_copy_to_clipboard(phone_number)
-
+            # Add a button to copy the phone number to the clipboard
+            if st.button(f"คัดลอกหมายเลขโทรศัพท์: {phone_number}"):
+                pyperclip.copy(phone_number)
+                st.success(f"คัดลอกเบอร์โทรศัพท์แล้ว: {phone_number}")
             st.write("---")  # Separator line for each contact
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
