@@ -40,23 +40,41 @@ def format_phone_number(phone_number):
 def display_contact_info(contact):
     phone_number = format_phone_number(contact['โทรศัพท์'])
     
-    # Full-width container and centered content
+    # Full-width container with centered content
     with st.container():
-        st.markdown("<style>div.row-widget.stButton {text-align: center;}</style>", unsafe_allow_html=True)
-        col1, col2, col3 = st.columns([1, 3, 1])  # Columns setup for centering content
-        with col2:  # Center content in the middle column
-            st.image(contact['ภาพ'], width=150)  # Display contact image
-            
-            # Display contact details in the specified order
-            st.write(f"**ยศ-ชื่อ**: {contact['ยศ ชื่อ สกุล']}")
-            st.write(f"**ชื่อเล่น**: {contact['ชื่อเล่น']}")
-            st.write(f"**รุ่น**: {contact['รุ่น']}")
-            st.write(f"**ตำแหน่ง**: {contact['ตำแหน่ง']}")
-            st.write(f"**วัน เดือน ปี เกิด**: {contact['วัน เดือน ปี เกิด']}")
-            
-            # Phone number and Copy button
-            st.write(f"**โทรศัพท์**: {phone_number}")
-            st_copy_to_clipboard(phone_number)
+        st.markdown(
+            """
+            <style>
+            .centered-content {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+            </style>
+            <div class="centered-content">
+                <img src="{}" alt="Contact Image" width="150">
+                <h4>ยศ-ชื่อ: {}</h4>
+                <p><strong>ชื่อเล่น</strong>: {}</p>
+                <p><strong>รุ่น</strong>: {}</p>
+                <p><strong>ตำแหน่ง</strong>: {}</p>
+                <p><strong>วัน เดือน ปี เกิด</strong>: {}</p>
+                <p><strong>โทรศัพท์</strong>: {}</p>
+            </div>
+            """.format(
+                contact['ภาพ'],
+                contact['ยศ ชื่อ สกุล'],
+                contact['ชื่อเล่น'],
+                contact['รุ่น'],
+                contact['ตำแหน่ง'],
+                contact['วัน เดือน ปี เกิด'],
+                phone_number,
+            ),
+            unsafe_allow_html=True
+        )
+        
+        # Add Copy to Clipboard button just after phone number
+        st_copy_to_clipboard(phone_number)
 
 # Streamlit layout for displaying contacts
 st.title("ทำเนียบนายทหาร จปร. ค่ายสุรสีห์")
