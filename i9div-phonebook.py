@@ -2,7 +2,7 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
-from st_copy_to_clipboard import copy_to_clipboard
+from st_copy_to_clipboard import st_copy_to_clipboard
 
 # Set page title
 st.set_page_config(page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์")
@@ -69,7 +69,6 @@ if search_clicked:
     if not search_results.empty:
         for _, contact in search_results.iterrows():
             phone_number = format_phone_number(contact['โทรศัพท์'])
-            
             st.markdown(f"""
             <div style="border: 2px solid #d4d4d4; padding: 15px; margin-bottom: 15px;">
                 <div style="text-align: center;">
@@ -86,9 +85,9 @@ if search_clicked:
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    {copy_to_clipboard(f"{phone_number}", label="คัดลอกเบอร์โทรศัพท์", success_msg="Copied")}
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            """)
+
+            # Copy to Clipboard button
+            st_copy_to_clipboard(phone_number, label="คัดลอกเบอร์โทรศัพท์")
     else:
         st.warning("ไม่พบข้อมูลที่ต้องการค้นหา")
