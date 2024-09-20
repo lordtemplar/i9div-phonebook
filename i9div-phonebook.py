@@ -3,14 +3,27 @@ import gspread
 import pandas as pd
 from google.oauth2.service_account import Credentials
 
-# Set up the page layout, title, and force dark theme
-st.set_page_config(
-    page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์", 
-    layout="wide", 
-    initial_sidebar_state="expanded",
-    theme={"primaryColor": "#1f77b4", "backgroundColor": "#0e1117", "secondaryBackgroundColor": "#262730", "textColor": "#fafafa"}
-)
+# Set up the page layout and title
+st.set_page_config(page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์", layout="wide")
 
+# Custom CSS for dark theme
+st.markdown("""
+    <style>
+    body {
+        background-color: #0e1117;
+        color: #fafafa;
+    }
+    .stTextInput, .stButton, .stSelectbox, .stMarkdown {
+        background-color: #262730;
+        color: #fafafa;
+    }
+    .stButton>button {
+        background-color: #1f77b4;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# Your remaining app logic
 # Authenticate and connect to Google Sheets
 def authenticate_google_sheets():
     credentials = Credentials.from_service_account_info(
@@ -49,17 +62,6 @@ st.markdown("""
 # Update search box label
 search_term = st.text_input("ค้นหา (ยศ, ชื่อ, นามสกุล, รุ่น, ตำแหน่ง, สังกัด, ชั้นยศ, หมายเลขโทรศัพท์)")
 
-# Apply custom CSS for left-aligned content
-st.markdown("""
-    <style>
-    .container { width: 100%; }
-    .centered-text { text-align: center; } /* Center text */
-    .left-content { width: 100%; text-align: left; }
-    img { display: block; margin-left: auto; margin-right: auto; margin-bottom: 20px; } /* Center and reduce image size */
-    hr { border: none; border-top: 1px solid #ccc; margin: 30px 0; }
-    </style>
-""", unsafe_allow_html=True)
-
 # Filter and display search results
 if search_term:
     search_results = df[df.apply(lambda row: row.astype(str).str.contains(search_term, case=False).any(), axis=1)]
@@ -79,4 +81,4 @@ if search_term:
                 <hr> <!-- Add a horizontal line to separate each person -->
             """, unsafe_allow_html=True)
     else:
-        st.write("ไม่พบข้อมูลที่ต้องการ (No matching data found)")
+        st.write("ไม่พบข้อมูลที่
