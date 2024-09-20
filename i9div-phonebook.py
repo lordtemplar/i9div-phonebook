@@ -3,27 +3,12 @@ import gspread
 import pandas as pd
 from google.oauth2.service_account import Credentials
 
-# Set up the page layout and title
-st.set_page_config(page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์", layout="wide")
+# Set page config first (before any other Streamlit elements)
+st.set_page_config(
+    page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์",  # Browser title
+    layout="wide",  # Use wide layout
+)
 
-# Custom CSS for dark theme
-st.markdown("""
-    <style>
-    body {
-        background-color: #0e1117;
-        color: #fafafa;
-    }
-    .stTextInput, .stButton, .stSelectbox, .stMarkdown {
-        background-color: #262730;
-        color: #fafafa;
-    }
-    .stButton>button {
-        background-color: #1f77b4;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# Your remaining app logic
 # Authenticate and connect to Google Sheets
 def authenticate_google_sheets():
     credentials = Credentials.from_service_account_info(
@@ -50,6 +35,23 @@ sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW
 
 # Fetch and display data
 df = fetch_data(sheet_url)
+
+# Apply dark theme with custom CSS
+st.markdown("""
+    <style>
+    body {
+        background-color: #0e1117;
+        color: #fafafa;
+    }
+    .stTextInput, .stButton, .stSelectbox, .stMarkdown {
+        background-color: #262730;
+        color: #fafafa;
+    }
+    .stButton>button {
+        background-color: #1f77b4;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 # Display the logo and title
 st.markdown("""
@@ -81,4 +83,4 @@ if search_term:
                 <hr> <!-- Add a horizontal line to separate each person -->
             """, unsafe_allow_html=True)
     else:
-        st.write("ไม่พบข้อมูลที่
+        st.write("ไม่พบข้อมูลที่ต้องการ (No matching data found)")
