@@ -3,8 +3,13 @@ import gspread
 import pandas as pd
 from google.oauth2.service_account import Credentials
 
-# Set up the page layout and update browser title
-st.set_page_config(page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์", layout="wide")
+# Set up the page layout, title, and force dark theme
+st.set_page_config(
+    page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์", 
+    layout="wide", 
+    initial_sidebar_state="expanded",
+    theme={"primaryColor": "#1f77b4", "backgroundColor": "#0e1117", "secondaryBackgroundColor": "#262730", "textColor": "#fafafa"}
+)
 
 # Authenticate and connect to Google Sheets
 def authenticate_google_sheets():
