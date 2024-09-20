@@ -33,11 +33,11 @@ sheet_url = "https://docs.google.com/spreadsheets/d/1bN11ozHCvrT2H-qPacU0-5uSCJW
 # Fetch and display data
 df = fetch_data(sheet_url)
 
-# Display the logo and title
+# Display the logo and title with no fixed color
 st.markdown("""
     <div style="text-align:center;">
         <img src="https://firebasestorage.googleapis.com/v0/b/i9div-phonebook.appspot.com/o/logo.gif?alt=media&token=07073796-bd55-48ff-affa-eb82fdf59b7a" width="250"> <!-- Increased logo size -->
-        <h5 style="color: #f1f1f1;">ทำเนียบนายทหาร จปร. ค่ายสุรสีห์</h5> <!-- Smaller text size -->
+        <h5>ทำเนียบนายทหาร จปร. ค่ายสุรสีห์</h5> <!-- No fixed color, use Streamlit's default theme -->
     </div>
 """, unsafe_allow_html=True)
 
