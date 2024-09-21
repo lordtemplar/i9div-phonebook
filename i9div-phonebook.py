@@ -3,6 +3,16 @@ import gspread
 import pandas as pd
 from google.oauth2.service_account import Credentials
 
+# JavaScript to detect if the app is running in WebView or standalone mode and redirect to browser
+st.markdown("""
+    <script>
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        // Redirect to the browser if running in WebView or standalone mode
+        window.location.href = 'https://i9div-phonebook-jhrwfvjgf377v32u2dkh8i.streamlit.app/';
+    }
+    </script>
+""", unsafe_allow_html=True)
+
 # Set up the page layout and update browser title
 st.set_page_config(page_title="ทำเนียบนายทหาร จปร. ค่ายสุรสีห์", layout="wide")
 
